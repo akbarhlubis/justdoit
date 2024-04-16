@@ -20,14 +20,20 @@ function addVideo() {
   var video = $($videoDiv).find('video').get(0);
   var videoNum = Math.floor(Math.random() * (6 - 1)) + 1;
   var filename = 'videos/' + videoNum + '.webm';
-  video.src = chrome.extension.getURL(filename);
+  video.src = chrome.runtime.getURL(filename);
 
   video.onended = function () {
     addVideo();
   };
 
+
+  document.body.addEventListener('click', function() {
+	video.play();
+  });
+  
   video.addEventListener('loadeddata', function () {
     $(video).css('visibility', 'visible');
+    //video.muted = true;
     video.play();
   }, false);
 
