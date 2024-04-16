@@ -1,26 +1,43 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Just Do It!",
-  "version": "1.0",
+  "version": "2.0",
   "description": "Stop wasting your time!",
   "icons": {
     "16": "images/icon.png",
     "48": "images/icon.png",
     "128": "images/icon.png"
   },
+  // Consider migrating to service worker for background functionality
   "content_scripts": [
     {
-      "matches": [ "http://*/*", "https://*/*" ],
+      "matches": [ // Specify websites your extension needs access to (if applicable)
+        "http://*/*", 
+        "https://*/*"   // Replace with actual website(s)
+      ],
       "css": ["justdoit.css"],
       "js": ["jquery.min.js", "justdoit.js"],
       "run_at": "document_end"
     }
   ],
-  "permissions": [
-    "http://*/*", "https://*/*",
-    "activeTab",
-    "storage",
-    "tabs"
+  "permissions": [  // Request minimum required permissions
+    "activeTab",  //  (if applicable)
+    "storage"     //  (if applicable)
   ],
-  "web_accessible_resources": ["videos/*"]
+  // Remove host_permissions (unless absolutely necessary)
+  "host_permissions": [
+     "http://*/*",  // Not recommended
+     "https://*/*"  // Not recommended
+   ],
+  // Consider implementing Content Security Policy for security
+  "web_accessible_resources": [
+      {
+        "resources": [
+          "videos/*"
+        ],
+        "matches": [
+          "*://*/*"
+        ]
+      }
+    ]
 }
